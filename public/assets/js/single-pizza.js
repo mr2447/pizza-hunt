@@ -116,12 +116,13 @@ function handleNewCommentSubmit(event) {
   }
   console.log(pizzaId)
   const formData = { commentBody, writtenBy };
-  
+  console.log(formData)
+
   fetch(`/api/comments/${pizzaId}`, {
     method: 'Post',
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application.json'
+
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(formData)
   })
