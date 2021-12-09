@@ -24,18 +24,24 @@ function getPizza() {
       console.log(response);
       return response.json();
     })
-    .then(printPizza)
+    .then(response => {
+      console.log(response)
+      printPizza(response)
+    }
+    )
     .catch(err => {
       console.log(err);
       alert('Cannot find a pizza with this id! Taking you back.');
       window.history.back();
     })
+
 }
 
 function printPizza(pizzaData) {
   console.log(pizzaData);
 
   pizzaId = pizzaData._id;
+  console.log(pizzaId)
 
   const { pizzaName, createdBy, createdAt, size, toppings, comments } = pizzaData;
 
@@ -46,7 +52,7 @@ function printPizza(pizzaData) {
   $toppingsList.innerHTML = toppings
     .map(topping => `<span class="col-auto m-2 text-center btn">${topping}</span>`)
     .join('');
-
+  console.log(comments)
   if (comments && comments.length) {
     comments.forEach(printComment);
   } else {
@@ -108,7 +114,7 @@ function handleNewCommentSubmit(event) {
   if (!commentBody || !writtenBy) {
     return false;
   }
-
+  console.log(pizzaId)
   const formData = { commentBody, writtenBy };
   
   fetch(`/api/comments/${pizzaId}`, {
@@ -123,6 +129,7 @@ function handleNewCommentSubmit(event) {
       if (!response.ok) {
         throw new Error('Something went wrong!');
       }
+      console.log(response)
       response.json();
     })
     .then(commentResponse => {
